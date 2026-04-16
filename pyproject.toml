@@ -1,0 +1,15 @@
+[project]
+name = "deepagent-wiki-code"
+version = "0.1.0"
+description = "LangChain / LangGraph / Deep Agent example collection"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "langchain>=0.3",
+    "langgraph>=0.2",
+    "deepagents",
+    "python-dotenv",
+]
+
+[tool.uv]
+package = false

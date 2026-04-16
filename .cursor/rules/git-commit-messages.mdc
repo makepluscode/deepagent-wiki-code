@@ -1,0 +1,27 @@
+---
+description: Git commit messages — English, concise word count, conventional prefix
+alwaysApply: true
+---
+
+# Git commit messages
+
+- Write commit **summary lines** (first line) in **English** only.
+- Keep the summary **between 10 and 20 words** when describing a normal change. **Never exceed 20 words** on that line.
+- Tiny fixes (one-line typos, trivial tweaks) may use a **shorter** summary; do **not** pad with filler to reach 10 words.
+- Use **Conventional Commits**-style prefixes per project docs: `add:`, `update:`, `fix:`, `docs:`, etc.
+- Use **imperative mood** in the summary (e.g. “Add checkpointer example”, not “Added…”).
+- Put extra detail in the **body** after a blank line if needed; the body is not bound by the 10–20 word rule.
+
+## Examples
+
+```text
+docs: Add AGENTS.md with harness checklist and links to CLAUDE.md
+```
+
+```text
+fix: Handle empty thread_id in checkpointer resume path without crashing
+```
+
+```text
+add: Introduce 32-deepagent-filesystem with minimal permission allowlist
+```

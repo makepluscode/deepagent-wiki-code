@@ -72,8 +72,8 @@ LangChain / LangGraph / Deep Agent 예제코드 저장소.
 ## 실행 환경
 
 ```bash
-# 의존성 설치
-pip install langchain>=0.3 langgraph>=0.2 deepagents
+# 의존성 설치·동기화 (uv)
+uv sync
 
 # API 키 설정
 cp .env.example .env
@@ -81,7 +81,7 @@ cp .env.example .env
 
 # 예제 실행
 cd 31-deepagent-helloworld
-python main.py
+uv run python main.py
 ```
 
 ---

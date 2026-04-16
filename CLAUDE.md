@@ -22,7 +22,8 @@ deepagent-wiki-code/
 ├── README.md               # 전체 예제 목록 및 학습 경로
 ├── CLAUDE.md               # 이 파일 — 코딩 규칙 및 행동 지침
 ├── .env.example            # 환경변수 템플릿 (실제 키 절대 포함 금지)
-├── requirements.txt        # 공통 의존성
+├── pyproject.toml          # 공통 의존성 (uv)
+├── uv.lock                 # 잠금 파일 (uv sync)
 │
 ├── 11-langchain-helloworld/
 │   ├── README.md           # 예제 설명, 실행 방법
@@ -48,6 +49,7 @@ deepagent-wiki-code/
 - `@tool` 데코레이터 사용 시 **docstring 필수** (LLM이 도구 설명으로 사용)
 
 ### 의존성
+- 패키지 설치는 **uv**만 사용: `uv sync`, `uv run`, `uv add` (공통 의존성은 `pyproject.toml` / `uv.lock`).
 ```
 langchain>=0.3
 langgraph>=0.2
@@ -63,7 +65,7 @@ deepagents  (최신 stable)
 - 예제별 `README.md`에 다음 포함:
   1. 무엇을 만드는가 (한 줄)
   2. 배우는 것 (bullet)
-  3. 실행 방법 (`python main.py`)
+  3. 실행 방법 (`uv run python main.py`)
   4. 예상 출력 (스크린샷 또는 텍스트)
 
 ### 보안
@@ -135,6 +137,9 @@ feat/[번호]   ← 새 예제 작성 중
 ## 환경 설정
 
 ```bash
+# 의존성 동기화 (uv)
+uv sync
+
 # .env.example 참고하여 .env 생성
 cp .env.example .env
 

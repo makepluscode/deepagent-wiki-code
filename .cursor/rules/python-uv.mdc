@@ -1,0 +1,13 @@
+---
+description: Python toolchain — use uv only (sync, run), not pip or bare python for env
+alwaysApply: true
+---
+
+# Python: use uv only
+
+- **Do not** instruct or use `pip`, `pip install`, or ad-hoc `python`/`python3` for project installs when a managed environment is needed.
+- **Do** use **Astral uv**: `uv sync`, `uv run`, `uv add`, `uv lock`, etc.
+- **Install / lock deps:** `uv sync` (from repo root; uses `pyproject.toml` / `uv.lock`).
+- **Run examples and scripts:** `uv run python main.py` (or `uv run python path/to/main.py`). Prefer `uv run` so the project interpreter and dependencies are used.
+- **New dependency:** `uv add <package>` then commit `pyproject.toml` and `uv.lock`.
+- In **README** and **agent replies**, show `uv sync` and `uv run` instead of `pip install` / `python main.py`.
