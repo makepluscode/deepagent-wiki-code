@@ -1,0 +1,29 @@
+---
+description: Python lint and format — Ruff via uv; pre-commit on commit
+alwaysApply: true
+---
+
+# Python linting (Ruff only)
+
+This repo uses **Python only** for code. Use **Ruff** as the single linter and formatter. Do **not** add Black, Flake8, isort, or Pylint as separate tools.
+
+## Commands (always via uv)
+
+- Fix issues Ruff can auto-fix, then report the rest: `uv run ruff check --fix .`
+- Apply formatting: `uv run ruff format .`
+- Strict verification without writing files: `uv run ruff check .` and `uv run ruff format --check .`
+
+## When editing Python
+
+After changing any `.py` file, run **`ruff check`** and **`ruff format`** on the touched paths (or the whole repo) before considering the task done.
+
+## Pre-commit (most reliable local gate)
+
+One-time per clone: `uv run pre-commit install`. Then every `git commit` runs Ruff via `.pre-commit-config.yaml`.
+
+To run the same checks manually: `uv run pre-commit run --all-files`.
+
+## Configuration
+
+- **Single source of truth:** `[tool.ruff]` / `[tool.ruff.lint]` / `[tool.ruff.format]` in **`pyproject.toml`**.
+- Do not add parallel config in `ruff.toml` or `setup.cfg` unless there is a strong reason.

@@ -47,6 +47,7 @@ deepagent-wiki-code/
 - 함수는 **30줄 이내** — 넘으면 분리
 - 클래스 docstring 및 함수 docstring **필수** (한국어 또는 영어)
 - `@tool` 데코레이터 사용 시 **docstring 필수** (LLM이 도구 설명으로 사용)
+- **린트·포맷:** 저장소 루트에서 `uv run ruff check --fix .`, `uv run ruff format .` (설정은 `pyproject.toml`). 커밋 전 `uv run pre-commit install`로 후크가 Ruff를 실행함.
 
 ### 의존성
 - 패키지 설치는 **uv**만 사용: `uv sync`, `uv run`, `uv add` (공통 의존성은 `pyproject.toml` / `uv.lock`).

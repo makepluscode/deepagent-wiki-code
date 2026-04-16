@@ -84,6 +84,14 @@ cd 31-deepagent-helloworld
 uv run python main.py
 ```
 
+## 린트·포맷 (개발)
+
+```bash
+uv run ruff check --fix .
+uv run ruff format .
+uv run pre-commit install   # 최초 1회 — 커밋 시 Ruff 자동 실행
+```
+
 ---
 
 ## 관련 링크

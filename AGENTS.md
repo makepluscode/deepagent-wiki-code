@@ -35,6 +35,7 @@ Example code for **LangChain**, **LangGraph**, and **DeepAgent**. It is meant to
 - Keep functions **under ~30 lines**; split if longer.
 - Class and function **docstrings required** (Korean or English).
 - **`@tool`**: docstring **required** (used as the tool description for the LLM).
+- **Lint / format:** **Ruff only** (no Black/Flake8/isort stack). Run `uv run ruff check --fix .` and `uv run ruff format .` after edits. Use `uv run pre-commit install` once per clone so commits run the same checks.
 
 ---
 
@@ -96,7 +97,8 @@ Comment only non-obvious logic.
 1. Read `CLAUDE.md` and the example `README.md`.
 2. Example runs with `uv run python main.py` only; no secrets in code or docs.
 3. For 31–39: harness tags and pillar explanation appear in code/README as appropriate.
-4. If you hit a recurring pitfall, append to **Past Failures** in `CLAUDE.md`.
+4. `uv run ruff check .` and `uv run ruff format --check .` pass (or fix with `--fix` / `format`).
+5. If you hit a recurring pitfall, append to **Past Failures** in `CLAUDE.md`.
 
 ---
 

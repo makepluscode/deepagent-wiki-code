@@ -11,3 +11,4 @@ alwaysApply: true
 - **Run examples and scripts:** `uv run python main.py` (or `uv run python path/to/main.py`). Prefer `uv run` so the project interpreter and dependencies are used.
 - **New dependency:** `uv add <package>` then commit `pyproject.toml` and `uv.lock`.
 - In **README** and **agent replies**, show `uv sync` and `uv run` instead of `pip install` / `python main.py`.
+- **Lint and format** still go through uv; see **`python-lint.mdc`** (Ruff + pre-commit).
