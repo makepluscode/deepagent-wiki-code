@@ -26,17 +26,19 @@ deepagent-wiki-code/
 ├── pyproject.toml          # 공통 의존성 (uv)
 ├── uv.lock                 # 잠금 파일 (uv sync)
 │
-├── 11-langchain-helloworld/
-│   ├── README.md           # 예제 설명, 실행 방법
+├── 11-langchain-helloworld/   # [장번호][장 내 순서]
+│   ├── README.md              # 예제 설명, 실행 방법
 │   └── main.py
 ├── ...
-└── 39-deepagent-full-harness/
+└── 162-deepagent-full-harness/
     ├── README.md
     ├── main.py
     ├── middleware.py
     ├── eval/
     └── AGENTS.md
 ```
+
+> **번호 체계**: `[장번호][장 내 순서]` — 예) `42` = 4장 두 번째, `101` = 10장 첫 번째
 
 ---
 
