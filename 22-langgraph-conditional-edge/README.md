@@ -1,27 +1,42 @@
-# 22-langgraph-conditional-edge
+# 예제 22: add_conditional_edges로 조건 분기 라우팅
 
-**One line:** After one shared node, `add_conditional_edges` picks the next node from state.
+**한 줄 요약:** 라우팅 함수의 반환값으로 실행 경로를 동적으로 결정하는 조건 엣지.
 
-## What you learn
+---
 
-- **Conditional routing:** a small function returns a key (`even` / `odd`); the graph maps keys to node names.
-- **Same pattern for agents:** route to different tools or subgraphs from LLM output or scores.
-- **Still no API:** parity is a stand-in for any runtime decision.
+## 배우는 것
 
-## Run
+- **`add_conditional_edges`**: 라우팅 함수 반환값 → 다음 노드 이름을 매핑하는 방법
+- **라우팅 함수**: `Literal` 타입을 반환해 그래프가 선택할 분기를 알려주는 패턴
+- **실제 활용**: LLM 출력이나 점수 기반으로 다른 노드·서브그래프로 분기하는 에이전트 패턴의 기초
 
-From the repo root:
+---
+
+## 그래프 구조
+
+![graph](graph.png)
+
+---
+
+## 실행 방법
 
 ```bash
-uv run python 22-langgraph-conditional-edge/main.py
+uv run python main.py
 ```
 
-## Expected output
+---
 
-```text
-even branch: start n=3 -> {'n': 104}
-odd branch: start n=4 -> {'n': -95}
+## 예상 출력
+
+```
+=== 예제 22: 조건 엣지(Conditional Edge) 라우팅 ===
+
+그래프 구조 저장 완료: graph.png
+
+[짝수 분기] n=3 시작 → {'n': 104}
+[홀수 분기] n=4 시작 → {'n': -95}
 ```
 
-Trace for `n=3`: bump ->4 (even) -> +100 -> 104.  
-Trace for `n=4`: bump -> 5 (odd) -> -100 -> -95.
+흐름 추적:
+- `n=3` → bump → 4(짝수) → even(+100) → **104**
+- `n=4` → bump → 5(홀수) → odd(-100) → **-95**
