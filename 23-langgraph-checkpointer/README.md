@@ -1,51 +1,51 @@
-# Example 23: Persisting State with MemorySaver Checkpointer
+# 예제 23: MemorySaver 체크포인터로 대화 이력 유지하기
 
-| Book Chapter | Key APIs | Difficulty |
+| 책 챕터 | 핵심 API | 난이도 |
 |---|---|---|
-| Chapter 6 · §6.1 & §6.3 | `MemorySaver`, `thread_id`, `add_messages` | ⭐⭐ |
+| 6장 · §6.1 & §6.3 | `MemorySaver`, `thread_id`, `add_messages` | ⭐⭐ |
 
-> **Chapter 6** introduces LangGraph persistence. §6.1 explains why stateless graphs lose context between calls, and §6.3 shows how `MemorySaver` (also called `InMemorySaver` in some versions) solves this by checkpointing state after every node — keyed by `thread_id` so multiple sessions stay isolated.
+> **6장**은 LangGraph 영속성을 다룬다. §6.1은 체크포인터 없이 호출 간 컨텍스트가 사라지는 이유를, §6.3은 `MemorySaver`가 노드 실행 후 상태를 `thread_id` 키로 체크포인트하여 이를 해결하는 방법을 설명한다.
 
-**One line:** Attach a checkpointer to carry conversation history across multiple `invoke()` calls, isolated by `thread_id`.
-
----
-
-## Why LangGraph, Not LangChain?
-
-LangChain (LCEL chains) has no checkpointer concept. Every `chain.invoke()` is stateless — to persist history you must manually manage a `ChatMessageHistory` object and inject it into the prompt yourself.
-
-LangGraph is different because the graph owns a `State` object, and the checkpointer snapshots that entire state keyed by `thread_id` after every node. Any field — not just messages — is persisted and restored automatically.
-
-> **Checkpointer is a LangGraph-only feature.**
+**한 줄 요약:** 체크포인터를 붙여 `invoke()` 호출 간 대화 이력을 `thread_id` 단위로 유지한다.
 
 ---
 
-## What You Learn
+## LangChain이 아닌 LangGraph를 써야 하는 이유
 
-- **`MemorySaver`**: in-memory checkpointer that saves graph state after every node execution
-- **`thread_id`**: key that separates independent sessions — same ID continues the conversation, different ID starts fresh
-- **`add_messages` reducer**: accumulates messages instead of overwriting, enabling multi-turn context
-- **Why it matters**: without a checkpointer every `invoke()` starts from an empty state; with one, the graph remembers
+LangChain(LCEL 체인)에는 체크포인터 개념이 없다. `chain.invoke()`는 매번 무상태(stateless)로 실행되며, 이력을 유지하려면 `ChatMessageHistory` 객체를 직접 관리해 프롬프트에 주입해야 한다.
+
+LangGraph는 그래프 자체가 `State`를 소유하고, 체크포인터가 노드 실행 후 해당 State 전체를 `thread_id` 키로 자동 저장·복원한다. 메시지뿐 아니라 어떤 필드든 자동으로 영속된다.
+
+> **체크포인터는 LangGraph 전용 기능이다.**
 
 ---
 
-## Graph Structure
+## 배우는 것
+
+- **`MemorySaver`**: 노드 실행 후 그래프 상태를 인메모리에 저장하는 체크포인터
+- **`thread_id`**: 세션을 구분하는 키 — 같은 ID는 이전 대화를 이어받고, 다른 ID는 새 세션으로 시작
+- **`add_messages` Reducer**: 메시지를 덮어쓰지 않고 누적해 멀티턴 컨텍스트를 구성
+- **체크포인터 + Reducer 조합**: 멀티턴 대화 구현의 핵심
+
+---
+
+## 그래프 구조
 
 ![graph](graph.png)
 
 ---
 
-## How It Works
+## 동작 흐름
 
 ```
-invoke() #1  →  [HumanMessage("My name is Robert")]         thread-A
-invoke() #2  →  [HumanMessage("What is my name?")]          thread-A  ← remembers Robert
-invoke() #3  →  [HumanMessage("What is my name?")]          thread-B  ← no memory
+invoke() 1회  →  [HumanMessage("내 이름은 로버트야")]      thread-A
+invoke() 2회  →  [HumanMessage("내 이름이 뭐야?")]        thread-A  ← 로버트 기억
+invoke() 3회  →  [HumanMessage("내 이름이 뭐야?")]        thread-B  ← 기억 없음
 ```
 
 ---
 
-## Run
+## 실행 방법
 
 ```bash
 uv run python main.py
@@ -53,7 +53,7 @@ uv run python main.py
 
 ---
 
-## Expected Output
+## 예상 출력
 
 ```
 === 예제 23: MemorySaver 체크포인터 ===
@@ -85,8 +85,8 @@ AI      : 죄송하지만, 저는 당신의 이름을 모릅니다. ...
 
 ---
 
-## Environment Variables
+## 환경 변수
 
-| Variable | Description |
-|----------|-------------|
-| `ANTHROPIC_API_KEY` | Anthropic API key (required) |
+| 변수 | 설명 |
+|------|------|
+| `ANTHROPIC_API_KEY` | Anthropic API 키 (필수) |

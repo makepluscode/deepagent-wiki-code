@@ -75,7 +75,7 @@ deepagents  (최신 stable)
   2. 배우는 것 (bullet)
   3. 실행 방법 (`uv run python main.py`)
   4. 예상 출력 (스크린샷 또는 텍스트)
-- **README.md는 영어로 작성** (코드 주석은 한국어, README만 영어)
+- **README.md는 한국어로 작성** (코드 주석도 한국어)
 
 ### 입문서 코드 작성 원칙
 
