@@ -1,6 +1,7 @@
 # CLAUDE.md — deepagent-wiki-code
 
-이 저장소는 LangChain / LangGraph / Deep Agent 예제코드 모음입니다.
+이 저장소는 **LangChain / LangGraph / Deep Agent 입문서**의 예제코드 모음입니다.
+독자가 코드를 위에서 아래로 읽으며 개념을 순서대로 이해할 수 있도록 작성합니다.
 [deepagent-wiki](https://github.com/makepluscode/deepagent-wiki)의 `code/` submodule로 연결됩니다.
 
 ---
@@ -47,7 +48,12 @@ deepagent-wiki-code/
 - 함수는 **30줄 이내** — 넘으면 분리
 - 클래스 docstring 및 함수 docstring **필수** (한국어 또는 영어)
 - `@tool` 데코레이터 사용 시 **docstring 필수** (LLM이 도구 설명으로 사용)
-- **린트·포맷:** 저장소 루트에서 `uv run ruff check --fix .`, `uv run ruff format .` (설정은 `pyproject.toml`). 커밋 전 `uv run pre-commit install`로 후크가 Ruff를 실행함.
+- **린트·포맷 필수:** 코드 작성 후 **반드시** 아래 명령을 실행한다. 린트를 통과하지 못한 코드는 완성된 것으로 간주하지 않는다.
+  ```bash
+  uv run ruff check --fix .
+  uv run ruff format .
+  ```
+  설정은 `pyproject.toml`. 커밋 전 `uv run pre-commit install`로 후크가 Ruff를 자동 실행함.
 
 ### 의존성
 - 패키지 설치는 **uv**만 사용: `uv sync`, `uv run`, `uv add` (공통 의존성은 `pyproject.toml` / `uv.lock`).
@@ -63,11 +69,48 @@ deepagents  (최신 stable)
 ### 파일 구성
 - 각 예제는 **독립 실행 가능**해야 함 (이전 예제 의존 금지)
 - 진입점은 항상 `main.py`
+- **파일 분리 금지**: 원칙적으로 `main.py` 하나에 모든 코드를 작성 (예외는 사용자가 명시적으로 지정)
 - 예제별 `README.md`에 다음 포함:
   1. 무엇을 만드는가 (한 줄)
   2. 배우는 것 (bullet)
   3. 실행 방법 (`uv run python main.py`)
   4. 예상 출력 (스크린샷 또는 텍스트)
+
+### 입문서 코드 작성 원칙
+
+이 저장소는 입문서이므로 독자의 **순차적 이해**를 최우선으로 한다.
+
+**함수 분리 금지**
+- `main.py` 안에서 로직을 함수로 나누지 않는다
+- 독자가 위에서 아래로 읽으며 실행 흐름을 한눈에 파악할 수 있어야 함
+- 예외: 사용자가 명시적으로 함수 분리를 요청한 경우
+
+**실행 순서 번호 주석 (필수)**
+- 코드의 주요 단계마다 `# 1.`, `# 2.`, ... 순서 번호를 한국어 설명과 함께 표시
+- 하나의 예제에서 최대 `9.`까지 (9단계 초과 금지)
+- 세부 단계가 필요한 경우 서브 번호 사용: `# 3-1.`, `# 3-2.`, ...
+- 예시:
+  ```python
+  # 1. 환경변수 로드
+  load_dotenv()
+
+  # 2. LLM 모델 초기화
+  llm = ChatAnthropic(model="claude-sonnet-4-6")
+
+  # 3. 프롬프트 템플릿 정의
+  prompt = ChatPromptTemplate.from_messages([...])
+
+  # 3-1. 시스템 메시지 설정
+  # 3-2. 사용자 메시지 설정
+
+  # 4. 체인 구성 및 실행
+  chain = prompt | llm
+  result = chain.invoke({"input": "안녕하세요"})
+  ```
+
+**주석 언어**
+- 모든 주석은 **한국어**로 작성
+- 기술 용어(클래스명, 메서드명 등)는 영어 그대로 사용
 
 ### 보안
 - `.env` 파일, API 키, 시크릿 **절대 커밋 금지**
